@@ -14,7 +14,7 @@
 > 结合自己的理解和实践
 
 ### Part1 编程基础与二进制
-#### [第1章 编程基础](/the-logic-java/src/main/java/com/xinyue/part1/readme.md)
+#### [第1章 编程基础](./the-logic-java/src/main/java/com/xinyue/part1/readme.md)
 
 ### Part2 面向对象
 #### [第3章 类的基础](/the-logic-java/src/main/java/com/xinyue/part2/readme.md)
