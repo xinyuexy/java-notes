@@ -9,6 +9,6 @@
 本仓库会不断更新和完善中，欢迎各路好友交流学习 <br>
 更多内容请移步博客: https://blog.csdn.net/qq_31903733
 
-## [《Java编程的逻辑》学习笔记](/the-logic-java/the-logic-java.md)
+### [《Java编程的逻辑》学习笔记](/the-logic-java/the-logic-java.md)
 > 参考[博客](https://www.cnblogs.com/swiftma/p/5631311.html)以及书籍《Java编程的逻辑》
 > 结合自己的理解和实践
