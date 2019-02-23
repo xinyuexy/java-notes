@@ -12,3 +12,6 @@
 #### [第5章 类的扩展](./src/main/java/com/xinyue/part2/readme3.md)
 #### [第6章 异常](./src/main/java/com/xinyue/part2/readme4.md)
 #### [第7章 常用基础类](./src/main/java/com/xinyue/part2/ch7.md)
+
+### Part3 泛型与容器
+#### [第8章 泛型](./src/main/java/com/xinyue/part3/ch8/readme.md)
