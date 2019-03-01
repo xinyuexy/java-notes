@@ -47,3 +47,118 @@
   >根据哈希值存取对象、比较对象是计算机程序中一种重要的思维方式，它使得存取对象主要依赖于自身哈希值，而不是与其他对象进行比较，存取效率也就与集合大小无关，高达O(1)，即使进行比较，也利用哈希值提高比较性能。
 
   >不过HashMap没有顺序，如果要保持添加的顺序，可以使用HashMap的一个子类LinkedHashMap。Map还有一个重要的实现类TreeMap，它可以排序.
+
+#### 10.2 剖析HashSet
+>Set表示的是没有重复元素、且不保证顺序的容器接口，它扩展了Collection
+```java
+public interface Set<E> extends Collection<E> {
+  ...
+}
+```
+与Collection接口中定义的方法是一样的，不过，一些方法有一些不同的规范要求。<br>
+应用场景：排重, 保存特殊值, 集合运算
+
+* **实现原理:** <br>
+  内部使用HashMap实现，维护一个HashMap的实例变量：
+  ```java
+  private transient HashMap<E,Object> map;
+  ```
+  因为map有键和值，而set相当于只有键，所以HashSet在内部定义了一个虚拟值，所有的键都拥有同一个值：
+  ```java
+  // Dummy value to associate with an Object in the backing Map
+  private static final Object PRESENT = new Object();
+  ```
+  我们下面看看HashSet的一些构造方法:
+  ```java
+    /**
+    * Constructs a new, empty set; the backing <tt>HashMap</tt> instance has
+    * default initial capacity (16) and load factor (0.75).
+    */
+    public HashSet() {
+        map = new HashMap<>();
+    }
+
+    public HashSet(Collection<? extends E> c) {
+        map = new HashMap<>(Math.max((int) (c.size()/.75f) + 1, 16));
+        addAll(c);
+    }
+
+    public HashSet(int initialCapacity, float loadFactor) {
+        map = new HashMap<>(initialCapacity, loadFactor);
+    }
+  ```
+  可以看到，`HashSet`的构造方法主要是调用了`HashMap`的构造方法.
+
+  **添加元素**:
+  ```java
+    public boolean add(E e) {
+        return map.put(e, PRESENT)==null;
+    }
+  ```
+  add方法调用了`HashMap`的put方法，元素e用于键，值就是那个固定值PRESENT，put返回null表示原来没有对应的键，添加成功了。HashMap中一个键只会保存一份。
+
+  **检查是否包含元素**：
+  ```java
+  public boolean contains(Object o) {
+      return map.containsKey(o);
+  }
+  ```
+  就是检查map中是否包含对应的键。
+
+  **删除元素**:
+  ```java
+  public boolean remove(Object o) {
+    return map.remove(o)==PRESENT;
+  }
+  ```
+  **迭代器**:
+  ```java
+  public Iterator<E> iterator() {
+      return map.keySet().iterator();
+  }
+  ```
+  就是返回map的keySet的迭代器。
+  >HashSet没有顺序，如果要保持添加的顺序，可以使用HashSet的一个子类LinkedHashSet。Set还有一个重要的实现类，TreeSet，它可以排序。
+
+#### 10.4 剖析TreeMap <br>
+1. 内部基于红黑树实现，按照键值维护元素顺序。
+2. 比较器：键值实现Comparable和传入comparator
+```java
+public TreeMap()
+public TreeMap(Comparator<? super K> comparator)
+```
+第一个为默认构造方法，如果使用默认构造方法，要求Map中的键实现Comparabe接口，TreeMap内部进行各种比较时会调用键的Comparable接口中的compareTo方法。
+
+第二个接受一个比较器对象comparator，如果comparator不为null，在TreeMap内部进行比较时会调用这个comparator的compare方法，而不再调用键的compareTo方法，也不再要求键实现Comparable接口。
+
+3.**实现原理** <br>
+4. **特点**：<br>
+   * 按键有序，TreeMap同样实现了SortedMap和NavigableMap接口，可以方便的根据键的顺序进行查找，如第一个、最后一个、某一范围的键、邻近键等。 
+   * 为了按键有序，TreeMap要求键实现Comparable接口或通过构造方法提供一个Comparator对象。
+   * 根据键保存、查找、删除的效率比较高，为O(h)，h为树的高度，在树平衡的情况下，h为log2(N)，N为节点数。
+
+#### 10.5 剖析TreeSet <br>
+内部实现基于TreeMap
+
+#### 10.6 剖析LinkedHashMap <br>
+继承自HashMap，支持两种顺序：插入顺序和访问顺序。（默认插入顺序）
+
+除了哈希表，内部还维护一个双向链表维护键值对的顺序。每个键值对既位于哈希表中，也位于这个双向链表中。
+
+**实现原理**
+
+**LinkedHashSet**：内部实现基于LinkedHashMap
+
+#### 10.7 剖析EnumMap <br>
+键值为枚举类型。对枚举类型效率高。
+
+```java
+public enum Size {
+  SMALL, MEDIUM, LARGE
+}
+
+Map<Size, Integer> map = new EnumMap<>(Size.class);
+```
+
+#### 10.8 剖析EnumSet <br>
+还不是很懂
