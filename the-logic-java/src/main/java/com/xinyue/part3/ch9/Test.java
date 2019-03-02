@@ -18,6 +18,5 @@ public class Test {
 
         Set<Integer> set = new HashSet<>();
         Map<Integer,Integer> map = new TreeMap<>();
-        LinkedHashMap
     }
 }
