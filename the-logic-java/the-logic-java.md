@@ -15,3 +15,7 @@
 
 ### Part3 泛型与容器
 #### [第8章 泛型](./src/main/java/com/xinyue/part3/ch8/readme.md)
+#### [第9章 列表和队列](./src/main/java/com/xinyue/part3/ch9/readme.md)
+#### [第10章 Map和Set](./src/main/java/com/xinyue/part3/ch10/readme.md)
+#### [第11章 堆与优先队列](./src/main/java/com/xinyue/part3/ch11/readme.md)
+#### [第12章 通用容器类和总结](./src/main/java/com/xinyue/part3/ch12/readme.md)
