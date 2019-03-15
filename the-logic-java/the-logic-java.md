@@ -22,3 +22,6 @@
 
 ### Part4 文件
 [第13 14章](./src/main/java/com/xinyue/part4/readme.md)
+
+### Part5 并发
+[第15章](./src/main/java/com/xinyue/part5/ch15/readme.md)
